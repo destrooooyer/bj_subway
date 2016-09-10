@@ -36,5 +36,10 @@ namespace bj_subway
 			return stations;
 		}
 
+		public string getLineName()
+		{
+			return lineName;
+		}
+
 	}
 }
