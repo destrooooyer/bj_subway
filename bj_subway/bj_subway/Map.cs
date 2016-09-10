@@ -128,7 +128,7 @@ namespace bj_subway
 		public void printShortestB(string station1, string station2)
 		{
 			//staion1 or station2 does not exist
-			if (!name2Index.ContainsKey(station1) || !name2Index.ContainsKey(station1))
+			if (!name2Index.ContainsKey(station1) || !name2Index.ContainsKey(station2))
 			{
 				Console.Out.WriteLine("起始站或目标站不存在");
 				return;
@@ -142,6 +142,7 @@ namespace bj_subway
 			int front = 0, rear = 1;
 
 			que.Add(id1);
+			bo[id1] = true;
 			while (front != rear)
 			{
 				int head = que[front];
@@ -199,7 +200,7 @@ namespace bj_subway
 													break;
 												}
 											}
-											if(tempFlag2==1)
+											if (tempFlag2 == 1)
 												break;
 										}
 									}
@@ -207,6 +208,9 @@ namespace bj_subway
 								Console.Out.WriteLine();
 							}
 
+							Console.Out.Write("共");
+							Console.Out.Write(route.Count - 1);
+							Console.Out.WriteLine("站");
 							return;
 						}
 
@@ -216,6 +220,123 @@ namespace bj_subway
 			}
 
 		}
+
+		public void printBetween(string station1, string station2, ref int x)
+		{
+			//get line number first
+			foreach (var i in lineOfStation[name2Index[station1]])
+			{
+				foreach (var j in lineOfStation[name2Index[station2]])
+				{
+					if (i == j)
+					{
+						if (lines[i].getStations().IndexOf(station1) < lines[i].getStations().IndexOf(station2))
+						{
+							for (int k = lines[i].getStations().IndexOf(station1) + 1; k < lines[i].getStations().IndexOf(station2); k++)
+							{
+								Console.Out.WriteLine(lines[i].getStations()[k]);
+								x++;
+							}
+						}
+						else
+						{
+							for (int k = lines[i].getStations().IndexOf(station1) - 1; k > lines[i].getStations().IndexOf(station2); k--)
+							{
+								Console.Out.WriteLine(lines[i].getStations()[k]);
+								x++;
+							}
+						}
+						return;
+					}
+				}
+			}
+		}
+
+		public void printShortestC(string station1, string station2)
+		{
+			//staion1 or station2 does not exist
+			if (!name2Index.ContainsKey(station1) || !name2Index.ContainsKey(station2))
+			{
+				Console.Out.WriteLine("起始站或目标站不存在");
+				return;
+			}
+			int id1 = name2Index[station1];
+			int id2 = name2Index[station2];
+			bool[] bo = new bool[1000];         //whether a line is visited
+			int[] from = new int[1000];         //a note: from which station did I come to this station
+			List<int> que = new List<int>();    //the queue of spfa
+			int front = 0, rear = 1;
+
+			que.Add(id1);
+			foreach (var i in lineOfStation[id1])
+			{
+				bo[i] = true;
+			}
+			while (front < rear)
+			{
+				foreach (var i in lineOfStation[que[front]])
+				{
+					foreach (var j in lines[i].getStations())
+					{
+						if (j == station2)
+						{
+							from[name2Index[j]] = que[front];
+							int iter = id2;
+							List<int> route = new List<int>();
+							while (iter != id1)
+							{
+								route.Add(iter);
+								iter = from[iter];
+							}
+							route.Add(iter);
+
+							int count = 0;
+							for (int k = route.Count - 1; k >= 0; k--)
+							{
+								Console.Out.Write(index2Name[route[k]]);
+								if (k != 0 && k != route.Count - 1)
+								{
+									foreach (var m in lineOfStation[route[k]])
+									{
+										foreach (var n in lineOfStation[route[k - 1]])
+										{
+											if (m == n)
+												Console.Out.Write(" 在此站换乘" + lines[m].getLineName());
+										}
+									}
+								}
+								Console.Out.WriteLine();
+
+								if (k > 0)
+								{
+									int x = 0;
+									printBetween(index2Name[route[k]], index2Name[route[k - 1]],ref x);
+									count += x;
+								}
+							}
+							Console.Out.Write("共");
+							Console.Out.Write(count + route.Count - 1);
+							Console.Out.WriteLine("站");
+							return;
+						}
+
+						foreach (var k in lineOfStation[name2Index[j]])
+						{
+							if (bo[k] == false)
+							{
+								bo[k] = true;
+								que.Add(name2Index[j]);
+								from[name2Index[j]] = que[front];
+								rear++;
+								break;
+							}
+						}
+					}
+				}
+				front++;
+			}
+		}
+
 
 
 

@@ -19,9 +19,13 @@ namespace bj_subway
 
 				if (args.Length == 3)
 				{
-					if (args[0] == "-c")
+					if (args[0] == "-b")
 					{
 						map.printShortestB(args[1], args[2]);
+					}
+					else if (args[0] == "-c")
+					{
+						map.printShortestC(args[1], args[2]);
 					}
 				}
 
