@@ -16,6 +16,15 @@ namespace bj_subway
 			try
 			{
 				map = new Map("beijing-subway.txt");
+
+				if (args.Length == 3)
+				{
+					if (args[0] == "-c")
+					{
+						map.printShortestB(args[1], args[2]);
+					}
+				}
+
 				while (true)
 				{
 					string inStr = Console.In.ReadLine();

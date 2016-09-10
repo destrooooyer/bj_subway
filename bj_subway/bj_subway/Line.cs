@@ -16,6 +16,8 @@ namespace bj_subway
 		public Line(string lineNameIn, string stationNameIn)
 		{
 			lineName = lineNameIn;
+			isRound = false;
+
 			try
 			{
 				stations = new List<string>(Regex.Split(stationNameIn, " "));
@@ -24,6 +26,9 @@ namespace bj_subway
 			{
 				throw ex;
 			}
+
+			if (stations[0] == stations[stations.Count - 1])
+				isRound = true;
 		}
 
 		public bool hasStation(string str)
@@ -39,6 +44,11 @@ namespace bj_subway
 		public string getLineName()
 		{
 			return lineName;
+		}
+
+		public bool getIsRound()
+		{
+			return isRound;
 		}
 
 	}
