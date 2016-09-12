@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace bj_subway
 {
-	class Map
+	partial class Map
 	{
 		private List<List<int>> connectionList;
 		private Dictionary<string, int> name2Index;
 		private Dictionary<int, string> index2Name;
 		private List<Line> lines;
 		private List<List<int>> lineOfStation;
+		private int size;
 
 		public Map(string path)
 		{
@@ -22,6 +23,7 @@ namespace bj_subway
 			name2Index = new Dictionary<string, int>();
 			index2Name = new Dictionary<int, string>();
 			lineOfStation = new List<List<int>>();
+			size = 0;
 
 			//input from file
 			try
@@ -69,6 +71,7 @@ namespace bj_subway
 					{
 						lineOfStation[name2Index[stations[j]]].Add(lines.IndexOf(i));
 					}
+					size = index;
 
 					//connection list
 					if (j == stations.Count - 1)    //last station
@@ -172,40 +175,61 @@ namespace bj_subway
 								Console.Out.Write(index2Name[route[j]]);
 								if (j != 0 && j != route.Count - 1)
 								{
-									int tempFlag = 0;
-									foreach (var k in lineOfStation[route[j - 1]])
+									foreach (var k in lineOfStation[route[j + 1]])
 									{
-										foreach (var l in lineOfStation[route[j + 1]])
+										foreach (var l in lineOfStation[route[j]])
 										{
 											if (k == l)
 											{
-												tempFlag = 1;
-												break;
-											}
-										}
-										if (tempFlag == 1)
-											break;
-									}
-									if (tempFlag == 0)
-									{
-										int tempFlag2 = 0;
-										foreach (var k in lineOfStation[route[j - 1]])
-										{
-											foreach (var l in lineOfStation[route[j]])
-											{
-												if (k == l)
+												if (!lineOfStation[route[j - 1]].Contains(k))
 												{
-													Console.Out.Write(" 在此站换乘" + lines[k].getLineName());
-													tempFlag2 = 1;
-													break;
+													foreach (var m in lineOfStation[route[j]])
+													{
+														if (lineOfStation[route[j - 1]].Contains(m))
+															Console.Out.Write(" 在此站换乘" + lines[m].getLineName());
+													}
 												}
 											}
-											if (tempFlag2 == 1)
-												break;
 										}
 									}
 								}
 								Console.Out.WriteLine();
+
+
+								// 									int tempFlag = 0;
+								// 									foreach (var k in lineOfStation[route[j - 1]])
+								// 									{
+								// 										foreach (var l in lineOfStation[route[j + 1]])
+								// 										{
+								// 											if (k == l)
+								// 											{
+								// 												tempFlag = 1;
+								// 												break;
+								// 											}
+								// 										}
+								// 										if (tempFlag == 1)
+								// 											break;
+								// 									}
+								// 									if (tempFlag == 0)
+								// 									{
+								// 										int tempFlag2 = 0;
+								// 										foreach (var k in lineOfStation[route[j - 1]])
+								// 										{
+								// 											foreach (var l in lineOfStation[route[j]])
+								// 											{
+								// 												if (k == l)
+								// 												{
+								// 													Console.Out.Write(" 在此站换乘" + lines[k].getLineName());
+								// 													tempFlag2 = 1;
+								// 													break;
+								// 												}
+								// 											}
+								// 											if (tempFlag2 == 1)
+								// 												break;
+								// 										}
+								// 									}
+								// 								}
+								// 								Console.Out.WriteLine();
 							}
 
 							Console.Out.Write("共");
@@ -310,7 +334,7 @@ namespace bj_subway
 								if (k > 0)
 								{
 									int x = 0;
-									printBetween(index2Name[route[k]], index2Name[route[k - 1]],ref x);
+									printBetween(index2Name[route[k]], index2Name[route[k - 1]], ref x);
 									count += x;
 								}
 							}
