@@ -37,6 +37,7 @@ namespace bj_subway
 			}
 			catch (System.Exception ex)
 			{
+                Console.Out.WriteLine(ex);
 				return;
 			}
 		}

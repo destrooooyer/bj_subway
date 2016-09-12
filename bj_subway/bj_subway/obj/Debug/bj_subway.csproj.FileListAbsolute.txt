@@ -10,3 +10,9 @@ C:\Users\DESTRooooYER\Documents\GitHub\bj_subway\bj_subway\bj_subway\obj\Debug\b
 C:\Users\DESTRooooYER\Documents\GitHub\bj_subway\bj_subway\bj_subway\bin\Debug\bj_subway.exe
 C:\Users\DESTRooooYER\Documents\GitHub\bj_subway\bj_subway\bj_subway\bin\Debug\bj_subway.pdb
 C:\Users\DESTRooooYER\Documents\GitHub\bj_subway\bj_subway\bj_subway\obj\Debug\bj_subway.csprojResolveAssemblyReference.cache
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\bin\Debug\bj_subway.exe.config
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\obj\Debug\bj_subway.exe
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\obj\Debug\bj_subway.pdb
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\bin\Debug\bj_subway.exe
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\bin\Debug\bj_subway.pdb
+C:\Users\DESTR\Documents\GitHub\bj_subway\bj_subway\bj_subway\obj\Debug\bj_subway.csprojResolveAssemblyReference.cache
